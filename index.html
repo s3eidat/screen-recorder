@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Screen Recorder — Free Online Screen Recorder with Audio, No Install | S3eidat Tools</title>
+<meta name="description" content="Record your screen, a window or a tab with system audio and your microphone. Countdown, pause/resume, preview, download WebM or MP4. No watermark, no time limit, nothing uploaded.">
+<meta property="og:title" content="Screen Recorder — free, private, no install">
+<meta property="og:description" content="Record your screen with audio and mic. No watermark, no limit. Runs 100% in your browser.">
+<meta property="og:image" content="screenshot.png">
+<link rel="icon" href="kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="kit/kit.js"></script>
+</head>
+<body data-tool="screen-recorder">
+<main class="s3-main">
+  <section class="s3-hero">
+    <h1>Screen Recorder</h1>
+    <p>Record your whole screen, a window or a browser tab, with system audio and your microphone. No watermark, no time limit, and the video never leaves your computer.</p>
+  </section>
+
+  <div class="card unsupported" id="unsupported" hidden>
+    <b>This browser can't record the screen.</b>
+    <p class="muted" id="unsupportedWhy">iPhone, iPad and Android browsers don't let websites capture the screen. Open this page in Chrome, Edge, Firefox or Safari on a computer.</p>
+  </div>
+
+  <div class="grid-2 sr-grid">
+    <section class="card stack" id="setup">
+      <h2>Settings</h2>
+      <div class="grid-2 tight">
+        <label class="field">Resolution
+          <select class="select" id="res">
+            <option value="native">Native (screen size)</option>
+            <option value="1080">1080p</option>
+            <option value="720">720p</option>
+          </select>
+        </label>
+        <label class="field">Frame rate
+          <select class="select" id="fps">
+            <option value="15">15 fps (small files)</option>
+            <option value="30" selected>30 fps</option>
+            <option value="60">60 fps (smooth)</option>
+          </select>
+        </label>
+        <label class="field">Quality
+          <select class="select" id="quality">
+            <option value="standard">Standard</option>
+            <option value="high" selected>High</option>
+            <option value="max">Maximum</option>
+          </select>
+        </label>
+        <label class="field">Format
+          <select class="select" id="format"></select>
+        </label>
+      </div>
+      <div class="stack sr-audio">
+        <label class="check"><input type="checkbox" id="sysAudio" checked> System / tab audio <span class="faint">(tick "Share audio" in the browser's picker)</span></label>
+        <label class="check"><input type="checkbox" id="mic"> Microphone</label>
+        <label class="field" id="micVolWrap">Microphone volume <input type="range" id="micVol" min="0" max="200" value="100"></label>
+      </div>
+      <div class="row">
+        <span class="faint">Countdown</span>
+        <div class="seg" id="countdown" role="group" aria-label="Countdown">
+          <button aria-pressed="false" data-v="0">Off</button>
+          <button aria-pressed="true" data-v="3">3 s</button>
+          <button aria-pressed="false" data-v="5">5 s</button>
+        </div>
+      </div>
+      <div class="row sr-controls">
+        <button class="btn primary big" id="start"><span class="rec-dot"></span>Start recording</button>
+        <button class="btn big" id="pause" hidden><svg class="i"><use href="#i-pause"/></svg>Pause</button>
+        <button class="btn big danger" id="stop" hidden>Stop</button>
+      </div>
+      <p class="faint">Your browser asks what to share when you press Start. Nothing is recorded before that, and the video stays in this tab until you download it.</p>
+    </section>
+
+    <section class="card stack">
+      <div class="row between">
+        <h2 id="stageTitle">Preview</h2>
+        <span class="chip" id="status">Ready</span>
+      </div>
+      <div class="stage">
+        <video id="live" muted playsinline hidden></video>
+        <video id="result" controls playsinline hidden></video>
+        <div class="stage-empty" id="stageEmpty"><svg class="i"><use href="#i-play"/></svg><span>Your recording will appear here</span></div>
+        <div class="count" id="count" hidden></div>
+      </div>
+      <div class="stats" id="stats">
+        <div class="stat"><b id="timer">0:00</b><span>duration</span></div>
+        <div class="stat"><b id="size">0 B</b><span>size</span></div>
+        <div class="stat"><b id="dims">—</b><span>resolution</span></div>
+      </div>
+      <div class="row" id="resultActions" hidden>
+        <button class="btn primary" id="dl"><svg class="i"><use href="#i-download"/></svg>Download</button>
+        <button class="btn ghost" id="again"><svg class="i"><use href="#i-refresh"/></svg>New recording</button>
+      </div>
+    </section>
+  </div>
+
+  <section class="card mt" id="takesCard" hidden>
+    <div class="row between"><h2>This session <small>kept in memory until you close the tab</small></h2></div>
+    <div class="takes" id="takes"></div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
